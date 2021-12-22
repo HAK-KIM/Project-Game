@@ -10,7 +10,7 @@ root.geometry("800x800")
 fram = tk.Frame()
 fram.master.title("From Array to Graphics-step-1")
 canvas =tk.Canvas(fram)
-
+# grid display
 grid=[
         [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,2,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,0,2,0,0],
@@ -62,26 +62,17 @@ def getIndexof1(grid):
         for col in range(len(sub)):
             if sub[col]==1:
                 indexOf1=[row, col]
-
     return indexOf1
-print(getIndexof1(grid))
-def WinOrLost():
-   for row in range(len(grid)):
-      for col in range(len(grid[row])):
-         if grid[row][col]==5:
-            
-
-
 def moveright(event):
     # global grid
-   index1=getIndexof1(grid)
-   numberOfColumn = len(grid[0])
-   if index1[1]+1 < numberOfColumn and grid[index1[0]][index1[1]+1]!=0:
-      grid[index1[0]][index1[1]]=2
-      grid[index1[0]][index1[1]+1]=1
-   arrayToDrawing()
-
-
+    check = True
+    index1=getIndexof1(grid)
+    numberOfColumn = len(grid[0])
+    if index1[1]+1 < numberOfColumn and grid[index1[0]][index1[1]+1]!=0 and grid[index1[0]][index1[1]]!=5:
+        check = True
+        grid[index1[0]][index1[1]]=2
+        grid[index1[0]][index1[1]+1]=1
+    arrayToDrawing()
 
 def moveleft(event):
     # global grid
@@ -99,7 +90,6 @@ def moveup(event):
         grid[index1[0]-1][index1[1]]=1
     arrayToDrawing()
 
-
 def movedown(event):
     # global grid
     index1=getIndexof1(grid)
@@ -107,10 +97,11 @@ def movedown(event):
         grid[index1[0]][index1[1]]=2
         grid[index1[0]+1][index1[1]]=1
     arrayToDrawing()
-root.bind("<a>",moveleft)
-root.bind("<d>",moveright)
-root.bind("<w>",moveup)
-root.bind("<s>",movedown)
+
+root.bind("<Left>",moveleft)
+root.bind("<Right>",moveright)
+root.bind("<Up>",moveup)
+root.bind("<Down>",movedown)
 
 canvas.pack(expand=True, fill="both")
 fram.pack(expand=True, fill="both")
