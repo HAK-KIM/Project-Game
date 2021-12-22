@@ -11,6 +11,10 @@ fram = tk.Frame()
 fram.master.title("From Array to Graphics-step-1")
 canvas =tk.Canvas(fram)
 # grid display
+
+# DOOR = 5
+
+
 grid=[
         [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,2,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,0,2,0,0],
@@ -37,9 +41,13 @@ grid=[
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,5],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 ]
+
+
 mario=tk.PhotoImage(file='mario2.png')  
 wall=tk.PhotoImage(file='wall32.png')
 door =tk.PhotoImage(file='door32.png')
+Win =tk.PhotoImage(file='wall32.png')
+# winner=tk.PhotoImage(file='win.jpg')
 def arrayToDrawing():
     canvas.delete('all')
     for row in range(len(grid)):
@@ -48,12 +56,16 @@ def arrayToDrawing():
                 canvas.create_image(30+col*30,30+row*30, image=wall, anchor = 'se')
             elif grid[row][col]==1 and grid[row][col]!=0:
                 canvas.create_rectangle(col*30,row*30,30+col*30,30+row*30,fill="blue")
-               #  canvas.create_image(col*30,row*30, image=mario)
+                # canvas.create_image(col*30,row*30, image=mario)
             elif grid[row][col]==2:
                 canvas.create_rectangle(col*30,row*30,30+col*30,30+row*30,fill="gray", outline= "")
             elif grid[row][col]==5:
                canvas.create_image(30+col*30,30+row*30, image=door, anchor = 'se')
 arrayToDrawing()
+
+def won():
+    canvas.create_image(300,300, image=Win)
+won()
 # must be n, ne, e, se, s, sw, w, nw, or center
 def getIndexof1(grid):
     indexOf1=0
@@ -65,25 +77,29 @@ def getIndexof1(grid):
     return indexOf1
 def moveright(event):
     # global grid
-    check = True
+    # move(0, 1)
+    # check = True
     index1=getIndexof1(grid)
     numberOfColumn = len(grid[0])
-    if index1[1]+1 < numberOfColumn and grid[index1[0]][index1[1]+1]!=0 and grid[index1[0]][index1[1]]!=5:
-        check = True
+    if grid[index1[0]][index1[1]+1]==5:
+        print("You win")
+    elif index1[1]+1 < numberOfColumn and grid[index1[0]][index1[1]+1]!=0 and grid[index1[0]][index1[1]]!=5:
         grid[index1[0]][index1[1]]=2
         grid[index1[0]][index1[1]+1]=1
     arrayToDrawing()
 
 def moveleft(event):
     # global grid
+    # move(0, -1)
     index1=getIndexof1(grid)
     if index1[1]-1 >=0 and grid[index1[0]][index1[1]-1]!=0: 
         grid[index1[0]][index1[1]]=2
         grid[index1[0]][index1[1]-1]=1
     arrayToDrawing()
-
+    
 def moveup(event):
     # global grid
+    # move(-1, 0)
     index1=getIndexof1(grid)
     if index1[0]-1 <len(grid) and index1[0]-1>=0 and grid[index1[0]-1][index1[1]]!=0:
         grid[index1[0]][index1[1]]=2
@@ -92,12 +108,20 @@ def moveup(event):
 
 def movedown(event):
     # global grid
+    # move(1, 0)
     index1=getIndexof1(grid)
     if index1[0]+1 <len(grid) and grid[index1[0]+1][index1[1]]!=0:
         grid[index1[0]][index1[1]]=2
         grid[index1[0]+1][index1[1]]=1
     arrayToDrawing()
 
+
+# def move(deltaX, deltaY) :
+#     for 
+   # can
+    
+# gameStatus = 'PLAYING'  # WON  LOST
+  
 root.bind("<Left>",moveleft)
 root.bind("<Right>",moveright)
 root.bind("<Up>",moveup)
