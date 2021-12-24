@@ -10,6 +10,7 @@ root = tk.Tk()
 root.geometry("800x650")
 fram = tk.Frame()
 fram.master.title("Maze Game")
+root.resizable(0,0)
 canvas =tk.Canvas(fram)
 # grid display
 grid=[
@@ -28,7 +29,7 @@ grid=[
         [1,1,1,0,1,0,1,1,1,1,1,1,0,1,0,0,0,0,0,1],
         [1,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1,1,1,0,1],
         [1,0,1,0,1,0,1,0,1,1,1,1,0,0,0,1,0,0,0,1],
-        [1,0,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1],
+        [1,0,1,9,0,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1],
         [1,0,1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0],
         [1,0,1,0,1,0,1,0,1,0,0,0,1,1,1,1,1,1,1,1],
         [1,0,1,0,1,0,1,0,1,1,1,1,0,0,0,0,0,0,0,1],
@@ -47,10 +48,11 @@ win_sound = False
 Lost_sount = False
 # insert images---------------------------- 
 wall=tk.PhotoImage(file='wallnew.png')
-player=tk.PhotoImage(file='sata.png')
+player=tk.PhotoImage(file='santa25.png')
 door =tk.PhotoImage(file='door32.png')
 maze =tk.PhotoImage(file='start game.png')
 background =tk.PhotoImage(file='christmasBG.png')
+hart =tk.PhotoImage(file='hart32.png')
 coins =tk.PhotoImage(file='dollar.png')
 
 def game(event):
@@ -92,7 +94,13 @@ def arrayToDrawing():
                 canvas.create_image(170+col*25,100+row*25, image=coins)
     canvas.create_rectangle(18, 8, 85, 35, fill="#eeeeee",outline="", tags="back")
     canvas.create_text(50, 20, text = "<Back", fill="blue", font=("Arial",15), tags="back")
-    canvas.create_rectangle(145, 8, 400, 50, fill="#eeeeee",outline="", tags="back")
+    canvas.create_rectangle(145, 8, 400, 50, fill="white",outline="")
+    canvas.create_image(160,13,image=hart,anchor='nw')
+    canvas.create_image(200,13,image=hart,anchor='nw')
+    canvas.create_image(240,13,image=hart,anchor='nw')
+    canvas.create_image(280,13,image=hart,anchor='nw')
+    canvas.create_image(320,13,image=hart,anchor='nw')
+    canvas.create_image(360,13,image=hart,anchor='nw')
     # canvas.create_image(0,0,image=background,anchor='nw')
 # arrayToDrawing()
 # display win
