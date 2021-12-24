@@ -3,129 +3,149 @@
 
 import tkinter as tk;
 import random
+import winsound
 from random import randrange
 from tkinter.constants import X, Y
 root = tk.Tk()
-root.geometry("800x800")
+root.geometry("800x650")
 fram = tk.Frame()
-fram.master.title("From Array to Graphics-step-1")
+fram.master.title("Maze Game")
 canvas =tk.Canvas(fram)
 # grid display
-
-# DOOR = 5
-
-
 grid=[
-        [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,2,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,0,2,0,0],
-        [0,2,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,0],
-        [0,2,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,2,0,0,2,0],
-        [0,2,2,2,2,2,2,2,0,0,0,2,2,2,2,2,0,0,0,2,0,0,2,0],
-        [0,0,0,0,0,2,0,2,0,0,0,2,0,2,0,2,2,2,2,2,0,0,2,0],
-        [0,0,0,0,0,2,0,2,0,0,0,2,0,2,0,2,0,0,0,2,0,0,2,0],
-        [0,0,0,0,0,2,0,2,0,0,0,2,0,2,0,2,0,0,0,2,0,0,2,0],
-        [0,2,2,2,2,0,0,2,0,0,0,2,0,2,0,2,0,0,0,2,0,0,2,0],
-        [0,2,0,0,2,0,0,2,2,2,2,2,0,0,0,2,0,0,0,2,2,2,2,0],
-        [0,2,0,0,2,2,2,0,0,0,0,0,2,0,0,2,0,0,0,0,0,0,0,0],
-        [0,2,0,0,2,0,0,0,0,0,0,0,2,0,0,2,0,0,0,0,0,0,0,0],
-        [0,2,0,0,2,0,0,0,0,0,0,0,2,0,0,2,0,0,0,0,0,0,0,0],
-        [0,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
-        [0,2,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,2,0,0,2,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0],
-        [0,2,0,0,0,2,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0],
-        [0,2,0,0,0,2,0,0,0,0,0,2,0,0,2,2,2,2,2,2,0,0,0,0],
-        [0,2,0,0,0,2,2,2,2,2,2,2,0,0,2,0,0,0,0,2,0,0,0,0],
-        [0,2,0,0,0,2,0,0,0,0,0,2,0,0,2,0,0,0,0,2,0,0,0,0],
-        [0,2,0,0,0,2,0,0,0,0,0,0,0,0,2,0,0,0,0,2,0,0,0,0],
-        [0,2,2,2,0,2,2,2,2,2,2,2,2,2,2,0,0,0,0,2,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,5],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,1],
+        [1,1,1,1,0,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1],
+        [2,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1,0,1],
+        [1,1,1,1,1,1,1,1,0,1,0,1,1,0,1,1,1,1,0,1],
+        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
+        [1,0,1,1,1,1,1,0,1,0,0,0,1,0,0,1,0,1,1,1],
+        [1,0,0,0,0,0,1,0,1,1,1,1,1,0,1,1,0,1,0,1],
+        [1,0,1,1,1,1,1,0,1,0,1,0,0,0,0,0,0,1,0,1],
+        [1,0,1,0,0,0,0,0,0,0,1,0,0,1,0,1,1,1,0,1],
+        [1,0,1,0,1,1,1,1,1,1,1,0,1,1,0,0,0,0,0,1],
+        [1,0,1,0,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1],
+        [1,1,1,0,1,0,1,1,1,1,1,1,0,1,0,0,0,0,0,1],
+        [1,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1,1,1,0,1],
+        [1,0,1,0,1,0,1,0,1,1,1,1,0,0,0,1,0,0,0,1],
+        [1,0,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1],
+        [1,0,1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0],
+        [1,0,1,0,1,0,1,0,1,0,0,0,1,1,1,1,1,1,1,1],
+        [1,0,1,0,1,0,1,0,1,1,1,1,0,0,0,0,0,0,0,1],
+        [1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ]
-
-
-mario=tk.PhotoImage(file='mario2.png')  
-wall=tk.PhotoImage(file='wall32.png')
+# variables--------------------------------
+Up = False
+Down = False
+Left = False
+Right = False
+Win = False
+Lost = False
+# insert images---------------------------- 
+wall=tk.PhotoImage(file='wallnew.png')
+player=tk.PhotoImage(file='sata.png')
 door =tk.PhotoImage(file='door32.png')
-Win =tk.PhotoImage(file='wall32.png')
-# winner=tk.PhotoImage(file='win.jpg')
+maze =tk.PhotoImage(file='start game.png')
+background =tk.PhotoImage(file='christmasBG.png')
+
+def game(event):
+    arrayToDrawing()
+
+def start():
+    canvas.create_image(0,0,image=maze,  anchor = 'nw')
+    #Text Start
+    canvas.create_rectangle(230, 420, 575, 490, fill="#eeeeee",outline="", tags="start")
+    canvas.create_text(410, 453, text = "Start", fill="#ff9800", font="Times 45 italic bold", tags="start")
+
+    #Text Exit
+    canvas.create_rectangle(230, 500, 575, 570, fill="#eeeeee",outline="", tags="exit")
+    canvas.create_text(400, 533, text = "Exit", fill="#ff9800", font="Times 45 italic bold", tags="exit")
+    
+
+def begin():
+    canvas.create_text(380, 360, text = "Loading...", fill="black", font="Times 20 italic bold", tags="welcome")
+    canvas.after(2000, start)
+begin()
+def Back(event):
+    start()
+def Exit(event):
+   root.quit()
+
+
+# functions-------------------------------
+# drawing grid
 def arrayToDrawing():
     canvas.delete('all')
+    canvas.create_image(0,0,image=background,anchor='nw')
     for row in range(len(grid)):
         for col in range(len(grid[row])):
-            if grid[row][col]==0:
-                canvas.create_image(30+col*30,30+row*30, image=wall, anchor = 'se')
-            elif grid[row][col]==1 and grid[row][col]!=0:
-                canvas.create_rectangle(col*30,row*30,30+col*30,30+row*30,fill="blue")
-                # canvas.create_image(col*30,row*30, image=mario)
-            elif grid[row][col]==2:
-                canvas.create_rectangle(col*30,row*30,30+col*30,30+row*30,fill="gray", outline= "")
-            elif grid[row][col]==5:
-               canvas.create_image(30+col*30,30+row*30, image=door, anchor = 'se')
-arrayToDrawing()
+            if grid[row][col]==1:
+                canvas.create_image(170+col*25,100+row*25, image=wall, anchor = 'se')
+                # canvas.create_rectangle(170+col*25,100+row*25,col*25,125+row*25,fill='blue')
+            elif grid[row][col]==2 and grid[row][col]!=1:
+                canvas.create_image(160,160, image=player)
+    canvas.create_text(50, 20, text = "<Back", fill="black", font=("Arial",15), tags="back")
 
-def won():
-    canvas.create_image(300,300, image=Win)
-won()
-# must be n, ne, e, se, s, sw, w, nw, or center
+# display win
+def iswin():
+    canvas.create_image(300,350, image=winner)
+    
+# get index ot player
 def getIndexof1(grid):
     indexOf1=0
     for row in range(len(grid)):
         sub=grid[row]
         for col in range(len(sub)):
-            if sub[col]==1:
+            if sub[col]==2:
                 indexOf1=[row, col]
     return indexOf1
-def moveright(event):
-    # global grid
-    # move(0, 1)
-    # check = True
+# moving of player
+def move(deltaX, deltaY):
     index1=getIndexof1(grid)
     numberOfColumn = len(grid[0])
-    if grid[index1[0]][index1[1]+1]==5:
-        print("You win")
-    elif index1[1]+1 < numberOfColumn and grid[index1[0]][index1[1]+1]!=0 and grid[index1[0]][index1[1]]!=5:
-        grid[index1[0]][index1[1]]=2
-        grid[index1[0]][index1[1]+1]=1
+    if deltaX == 1 and deltaY==0:
+        if index1[1]+1 < numberOfColumn and grid[index1[0]][index1[1]+1]!=1:
+            grid[index1[0]][index1[1]]=0
+            grid[index1[0]][index1[1]+1]=2
+        if grid[16][19]==2:
+           iswin()
+    elif deltaX == -1 and deltaY==0:
+        if index1[1]-1 >=0 and grid[index1[0]][index1[1]-1]!=1: 
+            grid[index1[0]][index1[1]]=0
+            grid[index1[0]][index1[1]-1]=2
+        if grid[16][19]==2:
+           iswin()
+    elif deltaX==0 and deltaY==-1:
+        if index1[0]-1 <len(grid) and index1[0]-1>=0 and grid[index1[0]-1][index1[1]]!=1:
+            grid[index1[0]][index1[1]]=0
+            grid[index1[0]-1][index1[1]]=2
+    elif deltaX == 0 and deltaY == 1:
+        if index1[0]+1 <len(grid) and grid[index1[0]+1][index1[1]]!=1:
+            grid[index1[0]][index1[1]]=0
+            grid[index1[0]+1][index1[1]]=2
     arrayToDrawing()
+    
+def moveright(event):
+    move(1,0)
 
 def moveleft(event):
-    # global grid
-    # move(0, -1)
-    index1=getIndexof1(grid)
-    if index1[1]-1 >=0 and grid[index1[0]][index1[1]-1]!=0: 
-        grid[index1[0]][index1[1]]=2
-        grid[index1[0]][index1[1]-1]=1
-    arrayToDrawing()
-    
+    move(-1, 0)
+
 def moveup(event):
-    # global grid
-    # move(-1, 0)
-    index1=getIndexof1(grid)
-    if index1[0]-1 <len(grid) and index1[0]-1>=0 and grid[index1[0]-1][index1[1]]!=0:
-        grid[index1[0]][index1[1]]=2
-        grid[index1[0]-1][index1[1]]=1
-    arrayToDrawing()
+    move(0,-1)
 
 def movedown(event):
-    # global grid
-    # move(1, 0)
-    index1=getIndexof1(grid)
-    if index1[0]+1 <len(grid) and grid[index1[0]+1][index1[1]]!=0:
-        grid[index1[0]][index1[1]]=2
-        grid[index1[0]+1][index1[1]]=1
-    arrayToDrawing()
+    move(0, 1)
 
+root.bind('<w>',moveup)
+root.bind('<s>', movedown)
+root.bind('<a>', moveleft)
+root.bind('<d>', movedown)
 
-# def move(deltaX, deltaY) :
-#     for 
-   # can
-    
-# gameStatus = 'PLAYING'  # WON  LOST
-  
-root.bind("<Left>",moveleft)
-root.bind("<Right>",moveright)
-root.bind("<Up>",moveup)
-root.bind("<Down>",movedown)
+canvas.tag_bind("start", "<Button-1>", game)
+canvas.tag_bind("exit", "<Button-1>", Exit)
+canvas.tag_bind("back", "<Button-1>", Back)
 
 canvas.pack(expand=True, fill="both")
 fram.pack(expand=True, fill="both")
