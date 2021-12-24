@@ -15,73 +15,49 @@ canvas =tk.Canvas(fram)
 # grid display
 grid=[
         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [1,3,3,3,3,3,3,3,0,1,0,3,3,3,3,1,0,1,0,1],
-        [1,1,1,1,0,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1],
-        [2,0,0,0,0,0,0,1,0,1,0,1,3,3,3,3,3,1,0,1],
-        [1,1,1,1,1,1,1,1,0,1,0,1,1,0,1,1,1,1,0,1],
-        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
-        [1,0,1,1,1,1,1,0,1,0,0,0,1,0,0,1,0,1,1,1],
-        [1,0,0,0,0,0,1,0,1,1,1,1,1,0,1,1,0,1,0,1],
-        [1,0,1,1,1,1,1,0,1,0,1,0,0,0,0,0,0,1,0,1],
-        [1,0,1,0,0,0,0,0,0,0,1,0,0,1,0,1,1,1,0,1],
-        [1,0,1,0,1,1,1,1,1,1,1,0,1,1,0,0,0,0,0,1],
-        [1,0,1,0,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1],
-        [1,1,1,0,1,0,1,1,1,1,1,1,0,1,0,0,0,0,0,1],
-        [1,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1,1,1,0,1],
-        [1,0,1,0,1,0,1,0,1,1,1,1,0,0,0,1,0,0,0,1],
+        [1,3,0,3,0,3,0,3,0,1,0,3,0,3,0,1,0,1,9,1],
+        [1,1,1,1,0,1,1,1,3,1,0,1,1,1,1,1,0,1,0,1],
+        [2,0,0,0,0,0,0,1,0,1,3,1,3,0,3,0,3,1,3,1],
+        [1,1,1,1,1,1,1,1,3,1,0,1,1,0,1,1,1,1,0,1],
+        [1,3,0,3,0,3,0,3,0,3,0,3,0,3,0,1,3,0,3,1],
+        [1,0,1,1,1,1,1,0,1,3,9,3,1,0,0,1,0,1,1,1],
+        [1,3,3,9,3,3,1,0,1,1,1,1,1,0,1,1,0,1,3,1],
+        [1,0,1,1,1,1,1,0,1,9,1,9,3,0,3,0,3,1,0,1],
+        [1,3,1,0,3,0,3,0,3,0,1,3,0,1,0,1,1,1,3,1],
+        [1,9,1,3,1,1,1,1,1,1,1,3,1,1,0,3,0,3,0,1],
+        [1,3,1,0,1,3,0,3,0,3,3,0,3,1,1,1,1,1,1,1],
+        [1,1,1,3,1,0,1,1,1,1,1,1,0,1,0,3,0,3,0,1],
+        [1,0,3,0,1,3,1,0,3,0,3,0,3,1,3,1,1,1,0,1],
+        [1,3,1,3,1,0,1,3,1,1,1,1,0,9,0,1,0,0,3,1],
         [1,0,1,9,0,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1],
-        [1,0,1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0],
-        [1,0,1,0,1,0,1,0,1,0,0,0,1,1,1,1,1,1,1,1],
-        [1,0,1,0,1,0,1,0,1,1,1,1,0,0,0,0,0,0,0,1],
-        [1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1],
+        [1,3,1,3,1,3,1,3,1,0,3,0,3,0,3,0,3,0,3,5],
+        [1,0,1,0,1,0,9,0,1,0,3,0,9,1,1,1,1,1,1,1],
+        [1,3,1,3,1,3,1,3,1,1,1,1,0,3,0,3,0,3,0,1],
+        [1,0,3,0,3,0,1,0,3,0,9,3,0,1,3,3,9,3,3,1],
         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ]
 # variables--------------------------------
-Up = True
-Down = True
-Left = True
-Right = True
 Win = False
 Lost = False
 click_sound = True
 win_sound = False
 Lost_sount = False
+point = 0
 # insert images---------------------------- 
 wall=tk.PhotoImage(file='wallnew.png')
 player=tk.PhotoImage(file='santa25.png')
-door =tk.PhotoImage(file='door32.png')
 maze =tk.PhotoImage(file='start game.png')
 background =tk.PhotoImage(file='christmasBG.png')
 hart =tk.PhotoImage(file='hart32.png')
 coins =tk.PhotoImage(file='dollar.png')
-
-def game(event):
-    arrayToDrawing()
-
-def start():
-    canvas.create_image(0,0,image=maze,  anchor = 'nw')
-    #Text Start
-    canvas.create_rectangle(230, 420, 575, 490, fill="#eeeeee",outline="", tags="start")
-    canvas.create_text(410, 453, text = "Start", fill="#ff9800", font="Times 45 italic bold", tags="start")
-
-    #Text Exit
-    canvas.create_rectangle(230, 500, 575, 570, fill="#eeeeee",outline="", tags="exit")
-    canvas.create_text(400, 533, text = "Exit", fill="#ff9800", font="Times 45 italic bold", tags="exit")
-    
-
-def begin():
-    canvas.create_text(380, 360, text = "Loading...", fill="black", font="Times 20 italic bold", tags="welcome")
-    canvas.after(2000, start)
-begin()
-def Back(event):
-    start()
-def Exit(event):
-   root.quit()
-
+bomb =tk.PhotoImage(file='bomb.png')
+win=tk.PhotoImage(file='you win.png')
 
 # functions-------------------------------
 # drawing grid
 def arrayToDrawing():
+    global point, grid, click_sound, Win, Lost
+    index = getIndexof1(grid)
     canvas.delete('all')
     canvas.create_image(0,0,image=background,anchor='nw')
     for row in range(len(grid)):
@@ -91,19 +67,24 @@ def arrayToDrawing():
             elif grid[row][col]==2 and grid[row][col]!=1:
                 canvas.create_image(158+col*25,88+row*25, image=player)
             elif grid[row][col]==3:
-                canvas.create_image(170+col*25,100+row*25, image=coins)
-    canvas.create_rectangle(18, 8, 85, 35, fill="#eeeeee",outline="", tags="back")
-    canvas.create_text(50, 20, text = "<Back", fill="blue", font=("Arial",15), tags="back")
-    canvas.create_rectangle(145, 8, 400, 50, fill="white",outline="")
-    canvas.create_image(160,13,image=hart,anchor='nw')
-    canvas.create_image(200,13,image=hart,anchor='nw')
-    canvas.create_image(240,13,image=hart,anchor='nw')
+                canvas.create_image(160+col*25,89+row*25, image=coins)
+            elif grid[row][col]==9:
+                canvas.create_image(160+col*25,89+row*25, image=bomb)
+    canvas.create_rectangle(460, 8, 580, 50, fill="white",outline="")
+    canvas.create_text(520,30, text='Point : '+str(point), font=('Arial',20))
+    if grid[index[0]][index[1]+1]==3 or grid[index[0]][index[1]-1]==3 or grid[index[0]+1][index[1]]==3 or grid[index[0]-1][index[1]]==3 and grid[index[0]][index[1]+1]!=5:
+        point +=10
+    canvas.create_rectangle(190, 8, 400, 50, fill="white",outline="")
+    canvas.create_text(230, 30, text='Life: ',font=('Arial',20))
     canvas.create_image(280,13,image=hart,anchor='nw')
     canvas.create_image(320,13,image=hart,anchor='nw')
     canvas.create_image(360,13,image=hart,anchor='nw')
-    # canvas.create_image(0,0,image=background,anchor='nw')
-# arrayToDrawing()
-# display win
+    if Win:
+        canvas.create_image( 0, 0, image = win, anchor = "nw", tags="over")
+        Win=False
+    canvas.create_rectangle(18, 8, 85, 35, fill="#eeeeee",outline="", tags="back")
+    canvas.create_text(50, 20, text = "<Back", fill="blue", font=("Arial",15), tags="back")
+# display sound
 # get index ot player
 def getIndexof1(grid):
     indexOf1=0
@@ -115,30 +96,93 @@ def getIndexof1(grid):
     return indexOf1
 # moving of player
 def move(deltaX, deltaY):
+    global Win, Lost
     index1=getIndexof1(grid)
     numberOfColumn = len(grid[0])
     if index1[1]+deltaX < numberOfColumn and index1[0]+deltaY <len(grid) and index1[0]+deltaY>=0 and grid[index1[0]+deltaY][index1[1]+deltaX]!=1:
         grid[index1[0]][index1[1]]=0
         grid[index1[0]+deltaY][index1[1]+deltaX]=2
+    if grid[16][19] == 2:
+        Win =True
     arrayToDrawing()
+    
 # move right----------------------------------
 def moveright(event):
-    global Right
-    if Right:
-        move(1,0)
-    else:
-        Right = False
-        if click_sound == True:
-            winsound.PlaySound(sound, flags)
+    global click_sound,Win
+
+    move(1,0)
+    if click_sound:
+        winsound.PlaySound('Sounds\click.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
 # move left-----------------------------------
 def moveleft(event):
+    global click_sound
+
     move(-1, 0)
+    if click_sound == True:
+        winsound.PlaySound('Sounds\click.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
 # move up-----------------------------------
 def moveup(event):
+    global click_sound
     move(0,-1)
-
+    if click_sound == True:
+        winsound.PlaySound('Sounds\click.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+# move down
 def movedown(event):
+    global click_sound
     move(0, 1)
+    if click_sound == True:
+        winsound.PlaySound('Sounds\click.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+
+# game interface
+def game(event):
+    winsound.PlaySound('Sounds\music-game.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+    arrayToDrawing()
+# start game
+def start():
+    winsound.PlaySound('Sounds\music-game.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+    canvas.create_image(0,0,image=maze,  anchor = 'nw')
+    #Text Start
+    canvas.create_rectangle(230, 420, 575, 490, fill="#eeeeee",outline="", tags="start")
+    canvas.create_text(410, 453, text = "Start", fill="#ff9800", font="Times 45 italic bold", tags="start")
+    #Text Exit
+    canvas.create_rectangle(230, 500, 575, 570, fill="#eeeeee",outline="", tags="exit")
+    canvas.create_text(400, 533, text = "Exit", fill="#ff9800", font="Times 45 italic bold", tags="exit")
+    
+# Begining of game
+def begin():
+    canvas.create_text(380, 360, text = "Loading...", fill="black", font="Times 20 italic bold", tags="welcome")
+    canvas.after(2000, start)
+begin()
+# back and Exit
+
+def Back(event):
+    global grid
+    start()
+    grid=[
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,3,0,3,0,3,0,3,0,1,0,3,0,3,0,1,0,1,9,1],
+        [1,1,1,1,0,1,1,1,3,1,0,1,1,1,1,1,0,1,0,1],
+        [2,0,0,0,0,0,0,1,0,1,3,1,3,0,3,0,3,1,3,1],
+        [1,1,1,1,1,1,1,1,3,1,0,1,1,0,1,1,1,1,0,1],
+        [1,3,0,3,0,3,0,3,0,3,0,3,0,3,0,1,3,0,3,1],
+        [1,0,1,1,1,1,1,0,1,3,9,3,1,0,0,1,0,1,1,1],
+        [1,3,3,9,3,3,1,0,1,1,1,1,1,0,1,1,0,1,3,1],
+        [1,0,1,1,1,1,1,0,1,9,1,9,3,0,3,0,3,1,0,1],
+        [1,3,1,0,3,0,3,0,3,0,1,3,0,1,0,1,1,1,3,1],
+        [1,9,1,3,1,1,1,1,1,1,1,3,1,1,0,3,0,3,0,1],
+        [1,3,1,0,1,3,0,3,0,3,3,0,3,1,1,1,1,1,1,1],
+        [1,1,1,3,1,0,1,1,1,1,1,1,0,1,0,3,0,3,0,1],
+        [1,0,3,0,1,3,1,0,3,0,3,0,3,1,3,1,1,1,0,1],
+        [1,3,1,3,1,0,1,3,1,1,1,1,0,9,0,1,0,0,3,1],
+        [1,0,1,9,0,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1],
+        [1,3,1,3,1,3,1,3,1,0,3,0,3,0,3,0,3,0,3,5],
+        [1,0,1,0,1,0,9,0,1,0,3,0,9,1,1,1,1,1,1,1],
+        [1,3,1,3,1,3,1,3,1,1,1,1,0,3,0,3,0,3,0,1],
+        [1,0,3,0,3,0,1,0,3,0,9,3,0,1,3,3,9,3,3,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+]
+def Exit(event):
+   root.quit()
 
 root.bind('<w>',moveup)
 root.bind('<s>', movedown)
