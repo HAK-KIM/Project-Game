@@ -14,9 +14,9 @@ canvas =tk.Canvas(fram)
 # grid display
 grid=[
         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,1],
+        [1,3,3,3,3,3,3,3,0,1,0,3,3,3,3,1,0,1,0,1],
         [1,1,1,1,0,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1],
-        [2,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1,0,1],
+        [2,0,0,0,0,0,0,1,0,1,0,1,3,3,3,3,3,1,0,1],
         [1,1,1,1,1,1,1,1,0,1,0,1,1,0,1,1,1,1,0,1],
         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
         [1,0,1,1,1,1,1,0,1,0,0,0,1,0,0,1,0,1,1,1],
@@ -36,18 +36,22 @@ grid=[
         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ]
 # variables--------------------------------
-# Up = False
-# Down = False
-# Left = False
-# Right = False
-# Win = False
-# Lost = False
+Up = True
+Down = True
+Left = True
+Right = True
+Win = False
+Lost = False
+click_sound = True
+win_sound = False
+Lost_sount = False
 # insert images---------------------------- 
 wall=tk.PhotoImage(file='wallnew.png')
 player=tk.PhotoImage(file='sata.png')
 door =tk.PhotoImage(file='door32.png')
 maze =tk.PhotoImage(file='start game.png')
 background =tk.PhotoImage(file='christmasBG.png')
+coins =tk.PhotoImage(file='dollar.png')
 
 def game(event):
     arrayToDrawing()
@@ -84,6 +88,8 @@ def arrayToDrawing():
                 canvas.create_image(170+col*25,100+row*25, image=wall, anchor = 'se')
             elif grid[row][col]==2 and grid[row][col]!=1:
                 canvas.create_image(158+col*25,88+row*25, image=player)
+            elif grid[row][col]==3:
+                canvas.create_image(170+col*25,100+row*25, image=coins)
     canvas.create_rectangle(18, 8, 85, 35, fill="#eeeeee",outline="", tags="back")
     canvas.create_text(50, 20, text = "<Back", fill="blue", font=("Arial",15), tags="back")
     canvas.create_rectangle(145, 8, 400, 50, fill="#eeeeee",outline="", tags="back")
@@ -103,30 +109,23 @@ def getIndexof1(grid):
 def move(deltaX, deltaY):
     index1=getIndexof1(grid)
     numberOfColumn = len(grid[0])
-    if deltaX == 1 and deltaY==0:
-        if index1[1]+1 < numberOfColumn and grid[index1[0]][index1[1]+1]!=1:
-            grid[index1[0]][index1[1]]=0
-            grid[index1[0]][index1[1]+1]=2
-    elif deltaX == -1 and deltaY==0:
-        if index1[1]-1 >=0 and grid[index1[0]][index1[1]-1]!=1: 
-            grid[index1[0]][index1[1]]=0
-            grid[index1[0]][index1[1]-1]=2
-    elif deltaX==0 and deltaY==-1:
-        if index1[0]-1 <len(grid) and index1[0]-1>=0 and grid[index1[0]-1][index1[1]]!=1:
-            grid[index1[0]][index1[1]]=0
-            grid[index1[0]-1][index1[1]]=2
-    elif deltaX == 0 and deltaY == 1:
-        if index1[0]+1 <len(grid) and grid[index1[0]+1][index1[1]]!=1:
-            grid[index1[0]][index1[1]]=0
-            grid[index1[0]+1][index1[1]]=2
+    if index1[1]+deltaX < numberOfColumn and index1[0]+deltaY <len(grid) and index1[0]+deltaY>=0 and grid[index1[0]+deltaY][index1[1]+deltaX]!=1:
+        grid[index1[0]][index1[1]]=0
+        grid[index1[0]+deltaY][index1[1]+deltaX]=2
     arrayToDrawing()
-    
+# move right----------------------------------
 def moveright(event):
-    move(1,0)
-
+    global Right
+    if Right:
+        move(1,0)
+    else:
+        Right = False
+        if click_sound == True:
+            winsound.PlaySound(sound, flags)
+# move left-----------------------------------
 def moveleft(event):
     move(-1, 0)
-
+# move up-----------------------------------
 def moveup(event):
     move(0,-1)
 
