@@ -36,12 +36,12 @@ grid=[
         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ]
 # variables--------------------------------
-Up = False
-Down = False
-Left = False
-Right = False
-Win = False
-Lost = False
+# Up = False
+# Down = False
+# Left = False
+# Right = False
+# Win = False
+# Lost = False
 # insert images---------------------------- 
 wall=tk.PhotoImage(file='wallnew.png')
 player=tk.PhotoImage(file='sata.png')
@@ -82,15 +82,14 @@ def arrayToDrawing():
         for col in range(len(grid[row])):
             if grid[row][col]==1:
                 canvas.create_image(170+col*25,100+row*25, image=wall, anchor = 'se')
-                # canvas.create_rectangle(170+col*25,100+row*25,col*25,125+row*25,fill='blue')
             elif grid[row][col]==2 and grid[row][col]!=1:
-                canvas.create_image(160,160, image=player)
-    canvas.create_text(50, 20, text = "<Back", fill="black", font=("Arial",15), tags="back")
-
+                canvas.create_image(158+col*25,88+row*25, image=player)
+    canvas.create_rectangle(18, 8, 85, 35, fill="#eeeeee",outline="", tags="back")
+    canvas.create_text(50, 20, text = "<Back", fill="blue", font=("Arial",15), tags="back")
+    canvas.create_rectangle(145, 8, 400, 50, fill="#eeeeee",outline="", tags="back")
+    # canvas.create_image(0,0,image=background,anchor='nw')
+# arrayToDrawing()
 # display win
-def iswin():
-    canvas.create_image(300,350, image=winner)
-    
 # get index ot player
 def getIndexof1(grid):
     indexOf1=0
@@ -108,14 +107,10 @@ def move(deltaX, deltaY):
         if index1[1]+1 < numberOfColumn and grid[index1[0]][index1[1]+1]!=1:
             grid[index1[0]][index1[1]]=0
             grid[index1[0]][index1[1]+1]=2
-        if grid[16][19]==2:
-           iswin()
     elif deltaX == -1 and deltaY==0:
         if index1[1]-1 >=0 and grid[index1[0]][index1[1]-1]!=1: 
             grid[index1[0]][index1[1]]=0
             grid[index1[0]][index1[1]-1]=2
-        if grid[16][19]==2:
-           iswin()
     elif deltaX==0 and deltaY==-1:
         if index1[0]-1 <len(grid) and index1[0]-1>=0 and grid[index1[0]-1][index1[1]]!=1:
             grid[index1[0]][index1[1]]=0
@@ -141,7 +136,7 @@ def movedown(event):
 root.bind('<w>',moveup)
 root.bind('<s>', movedown)
 root.bind('<a>', moveleft)
-root.bind('<d>', movedown)
+root.bind('<d>', moveright)
 
 canvas.tag_bind("start", "<Button-1>", game)
 canvas.tag_bind("exit", "<Button-1>", Exit)
