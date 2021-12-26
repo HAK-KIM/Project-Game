@@ -30,8 +30,8 @@ grid=[
         [1,0,3,0,1,3,1,0,3,0,3,0,3,1,3,1,1,1,0,1],
         [1,3,1,3,1,0,1,3,1,1,1,1,0,9,0,1,0,0,3,1],
         [1,0,1,9,0,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1],
-        [1,3,1,3,1,3,1,3,1,0,3,0,3,0,3,0,3,0,3,5],
-        [1,0,1,0,1,0,9,0,1,0,3,0,9,1,1,1,1,1,1,1],
+        [1,3,1,3,1,3,1,3,1,0,3,0,3,0,3,0,3,0,3,1],
+        [1,0,1,0,1,0,9,0,0,1,6,0,9,1,1,1,1,1,1,1],
         [1,3,1,3,1,3,1,3,1,1,1,1,0,3,0,3,0,3,0,1],
         [1,0,3,0,3,0,1,0,3,0,9,3,0,1,3,3,9,3,3,1],
         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -51,7 +51,7 @@ background =tk.PhotoImage(file='christmasBG.png')
 hart =tk.PhotoImage(file='hart32.png')
 coins =tk.PhotoImage(file='dollar.png')
 bomb =tk.PhotoImage(file='bomb.png')
-win=tk.PhotoImage(file='you win.png')
+win=tk.PhotoImage(file='youwin.png')
 
 # functions-------------------------------
 # drawing grid
@@ -70,18 +70,26 @@ def arrayToDrawing():
                 canvas.create_image(160+col*25,89+row*25, image=coins)
             elif grid[row][col]==9:
                 canvas.create_image(160+col*25,89+row*25, image=bomb)
-    canvas.create_rectangle(460, 8, 580, 50, fill="white",outline="")
+    canvas.create_rectangle(450, 8, 590, 50, fill="white",outline="")
     canvas.create_text(520,30, text='Point : '+str(point), font=('Arial',20))
-    if grid[index[0]][index[1]+1]==3 or grid[index[0]][index[1]-1]==3 or grid[index[0]+1][index[1]]==3 or grid[index[0]-1][index[1]]==3 and grid[index[0]][index[1]+1]!=5:
+    if grid[index[0]][index[1]+1]==3 or grid[index[0]][index[1]-1]==3 or grid[index[0]+1][index[1]]==3 or grid[index[0]-1][index[1]]==3:
         point +=10
-    canvas.create_rectangle(190, 8, 400, 50, fill="white",outline="")
-    canvas.create_text(230, 30, text='Life: ',font=('Arial',20))
-    canvas.create_image(280,13,image=hart,anchor='nw')
-    canvas.create_image(320,13,image=hart,anchor='nw')
-    canvas.create_image(360,13,image=hart,anchor='nw')
-    if Win:
-        canvas.create_image( 0, 0, image = win, anchor = "nw", tags="over")
-        Win=False
+    canvas.create_rectangle(180, 8, 410, 50, fill="white",outline="")
+    canvas.create_text(230, 30, text='Lives: ',font=('Arial',20))
+    lives = 3
+    check = False
+    for i in range(lives):
+        if grid[index[0]][index[1]+1]==9 or grid[index[0]][index[1]-1]==9 or grid[index[0]+1][index[1]]==9 or grid[index[0]-1][index[1]]==9:
+            check = True
+    if check:
+        lives = lives - 1
+    canvas.create_image(280+40*i,13,image=hart,anchor='nw')
+        
+    
+        
+    # canvas.create_image(280,13,image=hart,anchor='nw')
+    # canvas.create_image(320,13,image=hart,anchor='nw')
+    # canvas.create_image(360,13,image=hart,anchor='nw')
     canvas.create_rectangle(18, 8, 85, 35, fill="#eeeeee",outline="", tags="back")
     canvas.create_text(50, 20, text = "<Back", fill="blue", font=("Arial",15), tags="back")
 # display sound
@@ -97,38 +105,41 @@ def getIndexof1(grid):
 # moving of player
 def move(deltaX, deltaY):
     global Win, Lost
-    index1=getIndexof1(grid)
+    index=getIndexof1(grid)
     numberOfColumn = len(grid[0])
-    if index1[1]+deltaX < numberOfColumn and index1[0]+deltaY <len(grid) and index1[0]+deltaY>=0 and grid[index1[0]+deltaY][index1[1]+deltaX]!=1:
-        grid[index1[0]][index1[1]]=0
-        grid[index1[0]+deltaY][index1[1]+deltaX]=2
-    if grid[16][19] == 2:
+    if index[1]+deltaX < numberOfColumn and index[0]+deltaY <len(grid) and index[0]+deltaY>=0 and grid[index[0]+deltaY][index[1]+deltaX]!=1 and not Win:
+        grid[index[0]][index[1]]=0
+        grid[index[0]+deltaY][index[1]+deltaX]=2
+    if grid[17][10]==2:
         Win =True
     arrayToDrawing()
     
+    if Win:
+        canvas.create_image( 0, 0, image = win, anchor = "nw")
+        canvas.create_rectangle(710, 8, 780, 35, fill="#eeeeee",outline="", tags="next")
+        canvas.create_text(740, 20, text = "Next>", fill="blue", font=("Arial",15), tags="next")
 # move right----------------------------------
 def moveright(event):
     global click_sound,Win
-
-    move(1,0)
+    if not Win:
+        move(1,0)
     if click_sound:
         winsound.PlaySound('Sounds\click.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
 # move left-----------------------------------
 def moveleft(event):
-    global click_sound
-
+    global click_sound, Win
     move(-1, 0)
     if click_sound == True:
         winsound.PlaySound('Sounds\click.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
 # move up-----------------------------------
 def moveup(event):
-    global click_sound
+    global click_sound, Win
     move(0,-1)
     if click_sound == True:
         winsound.PlaySound('Sounds\click.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
 # move down
 def movedown(event):
-    global click_sound
+    global click_sound, Win
     move(0, 1)
     if click_sound == True:
         winsound.PlaySound('Sounds\click.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
@@ -156,8 +167,9 @@ begin()
 # back and Exit
 
 def Back(event):
-    global grid
+    global grid, point
     start()
+    point = 0
     grid=[
         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
         [1,3,0,3,0,3,0,3,0,1,0,3,0,3,0,1,0,1,9,1],
