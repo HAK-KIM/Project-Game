@@ -49,19 +49,19 @@ win_sound = False
 Lost_sount = False
 point = 0
 # insert images---------------------------- 
-wall=tk.PhotoImage(file='wallnew.png')
-player=tk.PhotoImage(file='santa25.png')
-maze =tk.PhotoImage(file='start game.png')
-background =tk.PhotoImage(file='christmasBG.png')
-hart =tk.PhotoImage(file='hart32.png')
-coins =tk.PhotoImage(file='dollar.png')
-bomb =tk.PhotoImage(file='bomb.png')
-win=tk.PhotoImage(file='youwin.png')
-
+wall=tk.PhotoImage(file='images\wallnew.png')
+player=tk.PhotoImage(file='images\santa25.png')
+maze =tk.PhotoImage(file='images\start game.png')
+background =tk.PhotoImage(file='images\christmasBG.png')
+hart =tk.PhotoImage(file='images\hart32.png')
+coins =tk.PhotoImage(file='images\dollar.png')
+bomb =tk.PhotoImage(file='images\Bomb.png')
+win=tk.PhotoImage(file='images\youwin.png')
+lost=tk.PhotoImage(file='images\gameover.png')
 # functions-------------------------------
 # drawing grid
 def arrayToDrawing():
-    global point, grid, Win, Lost
+    global point, grid, Win, Lost, PlayerLives
     index = getIndexof1(grid)
     canvas.delete('all')
     canvas.create_image(0,0,image=background,anchor='nw')
@@ -77,7 +77,7 @@ def arrayToDrawing():
                 canvas.create_image(160+col*25,89+row*25, image=bomb)
     canvas.create_rectangle(450, 8, 590, 50, fill="white",outline="")
     canvas.create_text(520,30, text='Point : '+str(point), font=('Arial',20))
-    if grid[index[0]][index[1]+1]==3 or grid[index[0]][index[1]-1]==3 or grid[index[0]+1][index[1]]==3 or grid[index[0]-1][index[1]]==3:
+    if grid[index[0]][index[1]+1]==Coins or grid[index[0]][index[1]-1]==Coins or grid[index[0]+1][index[1]]==Coins or grid[index[0]-1][index[1]]==Coins:
         point +=5
     canvas.create_rectangle(180, 8, 410, 50, fill="white",outline="")
     canvas.create_text(230, 30, text='Lives: ',font=('Arial',20))
@@ -85,8 +85,8 @@ def arrayToDrawing():
     canvas.create_text(50, 20, text = "<Back", fill="blue", font=("Arial",15), tags="back")
     canvas.create_rectangle(710, 8, 780, 35, fill="#eeeeee",outline="", tags="next")
     canvas.create_text(740, 20, text = "Next>", fill="blue", font=("Arial",15), tags="next")
-    for i in range(PlayerLives):
-        canvas.create_image(280+40*i,13,image=hart,anchor='nw')
+    diplayHeart()
+
 # get index ot player
 def getIndexof1(grid):
     indexOf1=0
@@ -98,7 +98,7 @@ def getIndexof1(grid):
     return indexOf1
 # moving of player
 def move(deltaX, deltaY):
-    global Win, Lost, Coins, point
+    global Win, Lost, Coins, point, PlayerLives
     index=getIndexof1(grid)
     numberOfColumn = len(grid[0])
     if index[1]+deltaX < numberOfColumn and index[0]+deltaY <len(grid) and index[0]+deltaY>=0 and grid[index[0]+deltaY][index[1]+deltaX]!=Wall:
@@ -107,40 +107,53 @@ def move(deltaX, deltaY):
     arrayToDrawing()
     if grid[17][10]==2:
         Win =True
+        winsound.PlaySound('Sounds\wining1.mp3', winsound.SND_FILENAME | winsound.SND_ASYNC)
         WinOrLost()
+    elif PlayerLives ==0:
+        Lost = True
+        winsound.PlaySound('Sounds\lost1.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+        WinOrLost()
+def diplayHeart():
+    global PlayerLives, grid
+    index=getIndexof1(grid)
+    for i in range(PlayerLives):
+        canvas.create_image(280+40*i,13,image=hart,anchor='nw')
+    if grid[index[0]][index[1]+1]==Bomb or grid[index[0]][index[1]-1]==Bomb or grid[index[0]+1][index[1]]==Bomb or grid[index[0]-1][index[1]]==Bomb:
+        PlayerLives -= 1
 # dis play win or lost
 def WinOrLost():
-    global Win, Lost
+    global Win, Lost, grid
     if Win:
         canvas.create_image( 0, 0, image = win, anchor = "nw")
         canvas.create_rectangle(710, 8, 780, 35, fill="#eeeeee",outline="", tags="next")
         canvas.create_text(740, 20, text = "Next>", fill="blue", font=("Arial",15), tags="next")
     if Lost:
-        canvas.create_image( 0, 0, image = win, anchor = "nw")
+        canvas.create_image( 0, 0, image = lost, anchor = "nw")
         canvas.create_rectangle(18, 8, 85, 35, fill="#eeeeee",outline="", tags="back")
-        canvas.create_text(50, 20, text = "<Back", fill="blue", font=("Arial",15), tags="back")
+        canvas.create_text(50, 20, text = "Restart", fill="blue", font=("Arial",15), tags="back")
+
 # move right----------------------------------
 def moveright(event):
-    global Win
-    if not Win:
+    global Win, Lost
+    if not Win and not Lost:
         move(1,0)
         winsound.PlaySound('Sounds\click.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
 # move left-----------------------------------
 def moveleft(event):
-    global Win
-    if not Win:
+    global Win, Lost
+    if not Win and not Lost:
         move(-1, 0)
         winsound.PlaySound('Sounds\click.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
 # move up-----------------------------------
 def moveup(event):
-    global Win
-    if not Win:
+    global Win, Lost
+    if not Win and not Lost:
         move(0,-1)
         winsound.PlaySound('Sounds\click.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
 # move down
 def movedown(event):
-    global Win
-    if not Win:
+    global Win, Lost
+    if not Win and not Lost:
         move(0, 1)
         winsound.PlaySound('Sounds\click.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
 # game interface
@@ -167,8 +180,10 @@ begin()
 # back and Exit
 
 def Back(event):
-    global grid, point
+    global grid, point, Win, Lost, PlayerLives
     start()
+    Win = False
+    Lost = False
     point = 0
     grid=[
         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
