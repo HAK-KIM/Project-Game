@@ -56,7 +56,7 @@ wall=tk.PhotoImage(file='images\wallnew.png')
 player=tk.PhotoImage(file='images\santa25.png')
 maze =tk.PhotoImage(file='images\start game.png')
 background =tk.PhotoImage(file='images\christmasBG.png')
-hart =tk.PhotoImage(file='images\hart32.png')
+hart =tk.PhotoImage(file='images\Heart27-re.png')
 coins =tk.PhotoImage(file='images\dollar.png')
 bomb =tk.PhotoImage(file='images\Bomb.png')
 win=tk.PhotoImage(file='images\youwin.png')
@@ -87,7 +87,7 @@ def arrayToDrawing():
                 canvas.create_image(160+col*25,89+row*25, image=bomb)
             elif grid[row][col]==6:
                 canvas.create_image(156+col*25,87+row*25, image=Winnig)
-    displayPoints()
+    countPoints()
     playerlife()
     NextandBack()
 
@@ -105,10 +105,16 @@ def getIndexof1(grid):
 def playerlife():
     global PlayerLives, grid
     index=getIndexof1(grid)
-    canvas.create_rectangle(180, 8, 410, 50, fill="white",outline="")
-    canvas.create_text(230, 30, text='Lives: ',font=('Arial',20))
+    canvas.create_image( 180, 0,image=buttonheart, anchor = "nw")
+    canvas.create_text(230, 40, text='',font=('Arial',20))
     for i in range(PlayerLives):
-        canvas.create_image(280+40*i,13,image=hart,anchor='nw')
+        canvas.create_image(250+40*i,20,image=hart,anchor='nw')
+# count points
+def countPoints():
+    global grid, point, Coins
+    index = getIndexof1(grid)
+    canvas.create_image( 450, 8,image=buttonPoint, anchor = "nw")
+    canvas.create_text(550,38, text=str(point), font=('Arial',20))
 # display sounds
 def clickSound():
     winsound.PlaySound('Sounds\click.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
@@ -122,12 +128,6 @@ def bombSound():
     winsound.PlaySound('Sounds\Bomb', winsound.SND_FILENAME | winsound.SND_ASYNC)
 def winningSound():
     winsound.PlaySound('Sounds\winning.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
-# display points
-def displayPoints():
-    global grid, point, Coins
-    index = getIndexof1(grid)
-    canvas.create_rectangle(450, 8, 590, 50, fill="white",outline="")
-    canvas.create_text(520,30, text='Point : '+str(point), font=('Arial',20))
 # next and back button
 def NextandBack():
     canvas.create_image( 18,-5, image =About, anchor = "nw" ,tags="back")
@@ -161,17 +161,22 @@ def WinOrLost():
     global Win, Lost, grid, point
     if Win and point >=500:
         canvas.create_image( 0, 0, image = win, anchor = "nw")
-        canvas.create_rectangle(700, 8, 780, 35, fill="#eeeeee",outline="", tags="next")
-        canvas.create_text(740, 20, text = "Restart>", fill="blue", font=("Arial",15), tags="next")
+        canvas.create_image( 690, -5,  image =About, anchor = "nw" ,tags="about")
+        canvas.create_text(738, 29, text = "Replay", fill="blue", font=("Roboto, 15 italic bold"), tags="about")
+
     elif Win and point<500:
         canvas.create_rectangle(200, 280, 600, 320, fill="#ffffff",outline="", tags="next")
         canvas.create_text(400,300, text = 'Not enough point, play again!', font=('Arial', 20))
-        canvas.create_rectangle(350, 325, 460, 360, fill="red",outline="", tags="tryagain")
-        canvas.create_text(410, 335, text = "Try again?", fill="white", font=('Arial',15), tags="tryagain")
+        canvas.create_image( 350, 310,  image =About, anchor = "nw" ,tags="about")
+        canvas.create_text(400, 345, text = "Retry", fill="blue", font=("Roboto, 15 italic bold"), tags="back")
+
     elif Lost:
         canvas.create_image( 0, 0, image = lost, anchor = "nw")
-        canvas.create_rectangle(15, 8, 110, 35, fill="#eeeeee",outline="", tags="back")
-        canvas.create_text(60, 20, text = "Try again!", fill="blue", font=("Arial",15), tags="back")
+        canvas.create_image( 18,-5, image =About, anchor = "nw" ,tags="back")
+        canvas.create_text(65, 29, text = "Retry", fill="blue", font=("Roboto, 15 italic bold"), tags="back")
+        canvas.create_image( 690, -5,  image =About, anchor = "nw" ,tags="about")
+        canvas.create_text(738, 29, text = "ABOUT", fill="blue", font=("Roboto, 15 italic bold"), tags="about")
+
 # moving space
 def move(deltaX, deltaY):
     global Win, Lost, Coins, point, PlayerLives, walk_sound, colect_sound
