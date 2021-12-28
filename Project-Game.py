@@ -15,28 +15,29 @@ canvas =tk.Canvas(fram)
 # grid display
 grid=[
         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [1,3,0,3,0,3,0,3,0,1,0,3,0,3,0,1,0,1,9,1],
-        [1,1,1,1,0,1,1,1,3,1,0,1,1,1,1,1,0,1,0,1],
-        [2,0,0,0,0,0,0,1,0,1,3,1,3,0,3,0,3,1,3,1],
-        [1,1,1,1,1,1,1,1,3,1,0,1,1,0,1,1,1,1,0,1],
-        [1,3,0,3,0,3,0,3,0,3,0,3,0,3,0,1,3,0,3,1],
-        [1,0,1,1,1,1,1,0,1,3,3,3,1,0,0,1,0,1,1,1],
-        [1,3,0,9,3,3,1,0,1,1,1,1,1,0,1,1,0,1,3,1],
-        [1,3,1,1,1,1,1,0,1,9,1,9,3,0,3,0,3,1,0,1],
-        [1,0,1,0,3,0,3,0,3,0,1,3,1,1,0,1,1,1,3,1],
-        [1,9,1,3,1,1,1,1,1,1,1,3,0,1,0,3,0,3,0,1],
-        [1,3,1,0,1,3,0,3,0,3,3,0,3,1,1,1,1,1,1,1],
-        [1,1,1,3,1,0,1,1,1,1,1,1,0,1,0,3,0,3,0,1],
-        [1,0,3,3,1,3,1,0,3,0,3,0,3,1,3,1,1,1,0,1],
-        [1,3,1,0,1,0,1,3,1,1,1,1,9,0,0,1,0,0,3,1],
-        [1,0,1,9,0,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1],
-        [1,3,1,0,1,3,1,3,1,0,3,0,3,0,3,0,3,0,3,1],
-        [1,0,1,3,1,0,3,0,0,1,6,0,0,1,1,1,1,1,1,1],
-        [1,3,1,3,1,3,1,3,1,1,1,1,0,3,0,3,0,3,0,1],
-        [1,0,3,0,3,0,1,9,3,0,3,0,9,1,3,0,9,0,3,1],
+        [1,3,3,3,3,3,3,3,3,1,3,3,3,3,3,1,3,1,9,1],
+        [1,1,1,1,3,1,1,1,3,1,3,1,1,1,1,1,3,1,3,1],
+        [2,0,0,0,0,0,9,1,0,1,3,1,3,0,3,0,3,1,3,1],
+        [1,1,1,1,1,1,1,1,3,1,3,1,1,0,1,1,1,1,3,1],
+        [1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,3,3,3,1],
+        [1,3,1,1,1,1,1,3,1,3,9,3,1,0,0,1,0,1,1,1],
+        [1,3,3,3,9,0,1,3,1,1,1,1,1,0,1,1,0,1,3,1],
+        [1,3,1,1,1,1,1,3,1,9,1,9,3,3,3,3,3,1,3,1],
+        [1,3,1,9,3,3,3,3,3,3,1,3,1,1,3,1,1,1,3,1],
+        [1,9,1,3,1,1,1,1,1,1,1,3,3,1,3,3,3,3,3,1],
+        [1,0,1,3,1,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1],
+        [1,1,1,3,1,3,1,1,1,1,1,1,3,1,3,3,3,3,3,1],
+        [1,3,3,3,1,3,1,3,3,3,3,3,3,1,3,1,1,1,3,1],
+        [1,3,1,3,1,3,1,3,1,1,1,1,9,3,3,1,3,3,3,1],
+        [1,3,1,3,9,3,1,3,1,1,1,1,1,1,1,1,1,1,3,1],
+        [1,3,1,3,1,3,1,3,1,3,3,3,3,3,3,3,3,3,3,1],
+        [1,3,1,3,1,3,3,9,3,1,6,3,3,1,1,1,1,1,1,1],
+        [1,3,1,3,1,3,1,3,1,1,1,1,3,3,3,9,3,3,9,1],
+        [1,3,3,3,3,3,1,3,3,3,3,9,3,1,3,3,3,3,3,1],
         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ]
 # variables--------------------------------
+Hole = 6
 Player = 2
 Wall = 1
 Door = 5
@@ -48,6 +49,7 @@ Win = False
 Lost = False
 win_sound = False
 Lost_sount = False
+colect_sound = False
 point = 0
 # insert images---------------------------- 
 wall=tk.PhotoImage(file='images\wallnew.png')
@@ -60,6 +62,12 @@ bomb =tk.PhotoImage(file='images\Bomb.png')
 win=tk.PhotoImage(file='images\youwin.png')
 lost=tk.PhotoImage(file='images\gameover.png')
 Winnig=tk.PhotoImage(file='images\wining.png')
+About=tk.PhotoImage(file='images\About-button.png')
+mazegames=tk.PhotoImage(file='images\poster.png')
+button=tk.PhotoImage(file='images\Btnlast-removebg.png')
+back=tk.PhotoImage(file='images\Back100x70-removebg.png')
+buttonPoint=tk.PhotoImage(file='images\ButtonPoint-removebg.png')
+buttonheart=tk.PhotoImage(file='images\ButtonHeart-removebg.png')
 # functions-------------------------------
 # Graphic game
 def arrayToDrawing():
@@ -79,7 +87,7 @@ def arrayToDrawing():
                 canvas.create_image(160+col*25,89+row*25, image=bomb)
             elif grid[row][col]==6:
                 canvas.create_image(156+col*25,87+row*25, image=Winnig)
-    countPoints()
+    displayPoints()
     playerlife()
     NextandBack()
 
@@ -92,6 +100,7 @@ def getIndexof1(grid):
             if sub[col]==2:
                 indexOf1=[row, col]
     return indexOf1
+
 # player lives
 def playerlife():
     global PlayerLives, grid
@@ -100,98 +109,146 @@ def playerlife():
     canvas.create_text(230, 30, text='Lives: ',font=('Arial',20))
     for i in range(PlayerLives):
         canvas.create_image(280+40*i,13,image=hart,anchor='nw')
-    if grid[index[0]][index[1]+1]==Bomb or grid[index[0]][index[1]-1]==Bomb or grid[index[0]+1][index[1]]==Bomb or grid[index[0]-1][index[1]]==Bomb:
-        PlayerLives -= 1
-# count points
-def countPoints():
+# display sounds
+def clickSound():
+    winsound.PlaySound('Sounds\click.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+def gameSound():
+    winsound.PlaySound('Sounds\musicgame.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+def walkSound():
+    winsound.PlaySound('Sounds\walk2.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+def coinSound():
+    winsound.PlaySound('Sounds\coin2.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+def bombSound():
+    winsound.PlaySound('Sounds\Bomb', winsound.SND_FILENAME | winsound.SND_ASYNC)
+def winningSound():
+    winsound.PlaySound('Sounds\winning.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+# display points
+def displayPoints():
     global grid, point, Coins
     index = getIndexof1(grid)
     canvas.create_rectangle(450, 8, 590, 50, fill="white",outline="")
     canvas.create_text(520,30, text='Point : '+str(point), font=('Arial',20))
-    if grid[index[0]][index[1]+1]==Coins or grid[index[0]][index[1]-1]==Coins or grid[index[0]+1][index[1]]==Coins or grid[index[0]-1][index[1]]==Coins:
-        point +=5
 # next and back button
 def NextandBack():
-    canvas.create_rectangle(18, 8, 85, 35, fill="#eeeeee",outline="", tags="back")
-    canvas.create_text(50, 20, text = "<Back", fill="blue", font=("Arial",15), tags="back")
-    canvas.create_rectangle(710, 8, 780, 35, fill="#eeeeee",outline="", tags="next")
-    canvas.create_text(740, 20, text = "Next>", fill="blue", font=("Arial",15), tags="next")
+    canvas.create_image( 18,-5, image =About, anchor = "nw" ,tags="back")
+    canvas.create_text(65, 29, text = "BACK", fill="blue", font=("Roboto, 15 italic bold"), tags="back")
+    canvas.create_image( 690, -5,  image =About, anchor = "nw" ,tags="about")
+    canvas.create_text(738, 29, text = "ABOUT", fill="blue", font=("Roboto, 15 italic bold"), tags="about")
+
+def about(event):
+    canvas.create_rectangle(140,70,650,600,fill="white",tags='bgsenario')
+    canvas.create_rectangle(620,80,640,100,fill="red",tags='remove')
+    canvas.create_text(630,90,text="X" ,fill="white",font=("Arial",15),tags='remove')
+    canvas.create_text(285, 190, font="Purisa",text="- Step1: Click start to choose levels.", tags="senario")
+    canvas.create_text(335, 220, font="Purisa",text="- Step2: Santa-claus find the way go to Black-Hole.", tags="senario")
+    canvas.create_text(335, 250, font="Purisa",text="But have some Bomb on the way.", tags="senario")
+    canvas.create_text(350, 280, font="Purisa",text="- Step3: If Santa-claus meet one Bomb it will lose 1 lift.", tags="senario")
+    canvas.create_text(345, 310, font="Purisa",text="If Santa-claust lose 3 lift Game over!", tags="senario")
+    canvas.create_text(390, 340, font="Purisa",text="- Step4: If Santa-claust arrive Black-Hole whit 500 coins it will Win.", tags="senario")
+    canvas.create_text(405, 370, font="Purisa",text="But Santa-claust don't have enought coin it will not Win. ", tags="senario")
+    canvas.create_text(205, 400, font="Purisa,",text="Note:", tags="senario")
+    canvas.create_text(250, 430, font="Purisa",text="(A) = moveleft", tags="senario")
+    canvas.create_text(255, 460, font="Purisa",text="(D) = moveright", tags="senario")
+    canvas.create_text(250, 490, font="Purisa",text="(W) = moveup", tags="senario")
+    canvas.create_text(257, 520, font="Purisa",text="(S) = movedown", tags="senario")
+
+def remove(event):
+    canvas.delete('remove')
+    canvas.delete('bgsenario')
+    canvas.delete('senario')
 # dis play win or lost
 def WinOrLost():
-    global Win, Lost, grid
-    if Win:
+    global Win, Lost, grid, point
+    if Win and point >=500:
         canvas.create_image( 0, 0, image = win, anchor = "nw")
         canvas.create_rectangle(700, 8, 780, 35, fill="#eeeeee",outline="", tags="next")
         canvas.create_text(740, 20, text = "Restart>", fill="blue", font=("Arial",15), tags="next")
-    if Lost:
+    elif Win and point<500:
+        canvas.create_rectangle(200, 280, 600, 320, fill="#ffffff",outline="", tags="next")
+        canvas.create_text(400,300, text = 'Not enough point, play again!', font=('Arial', 20))
+        canvas.create_rectangle(350, 325, 460, 360, fill="red",outline="", tags="tryagain")
+        canvas.create_text(410, 335, text = "Try again?", fill="white", font=('Arial',15), tags="tryagain")
+    elif Lost:
         canvas.create_image( 0, 0, image = lost, anchor = "nw")
-        canvas.create_rectangle(18, 8, 85, 35, fill="#eeeeee",outline="", tags="back")
-        canvas.create_text(50, 20, text = "Try again!", fill="blue", font=("Arial",15), tags="back")
-# moving of player
+        canvas.create_rectangle(15, 8, 110, 35, fill="#eeeeee",outline="", tags="back")
+        canvas.create_text(60, 20, text = "Try again!", fill="blue", font=("Arial",15), tags="back")
+# moving space
 def move(deltaX, deltaY):
-    global Win, Lost, Coins, point, PlayerLives
+    global Win, Lost, Coins, point, PlayerLives, walk_sound, colect_sound
     index=getIndexof1(grid)
     numberOfColumn = len(grid[0])
+    if grid[index[0]+deltaY][index[1]+deltaX]==Coins:
+        colect_sound = True
+        if colect_sound:
+            coinSound()
+        elif grid[index[0]+deltaY][index[1]+deltaX]==player:
+            colect_sound = False
+            if walk_sound == True:
+                walkSound()
+        point +=5
+    if grid[index[0]+deltaY][index[1]+deltaX]==Bomb:
+        bombSound()
+        PlayerLives -= 1
+    if grid[index[0]+deltaY][index[1]+deltaX]==0:
+        walkSound()
     if index[1]+deltaX < numberOfColumn and index[0]+deltaY <len(grid) and index[0]+deltaY>=0 and grid[index[0]+deltaY][index[1]+deltaX]!=Wall:
         grid[index[0]][index[1]]=0
         grid[index[0]+deltaY][index[1]+deltaX]=2
     arrayToDrawing()
     if grid[17][10]==2:
+        winningSound()
         Win =True
-        winsound.PlaySound('Sounds\wining1.mp3', winsound.SND_FILENAME | winsound.SND_ASYNC)
         WinOrLost()
     elif PlayerLives ==0:
+        walk_sound = False
         Lost = True
-        winsound.PlaySound('Sounds\lost1.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
         WinOrLost()
 
 # move right----------------------------------
 def moveright(event):
-    global Win, Lost
+    global Win, Lost, walk_sound, colect_sound
     if not Win and not Lost:
         move(1,0)
-        winsound.PlaySound('Sounds\click.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
-# move left-----------------------------------
+
+# # move left-----------------------------------
 def moveleft(event):
-    global Win, Lost
+    global Win, Lost, walk_sound, colect_sound
     if not Win and not Lost:
         move(-1, 0)
-        winsound.PlaySound('Sounds\click.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+
 # move up-----------------------------------
 def moveup(event):
-    global Win, Lost
+    global Win, Lost, walk_sound, colect_sound
     if not Win and not Lost:
         move(0,-1)
-        winsound.PlaySound('Sounds\click.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+
 # move down
 def movedown(event):
-    global Win, Lost
+    global Win, Lost, walk_sound, colect_sound
     if not Win and not Lost:
         move(0, 1)
-        winsound.PlaySound('Sounds\click.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+
 # game interface
 def game(event):
-    winsound.PlaySound('Sounds\music-game.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
     arrayToDrawing()
+    gameSound()
     
-# start game
 def start():
-    winsound.PlaySound('Sounds\music-game.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
     canvas.create_image(0,0,image=maze,  anchor = 'nw')
     #Text Start
-    canvas.create_rectangle(230, 420, 575, 490, fill="#eeeeee",outline="", tags="start")
-    canvas.create_text(410, 453, text = "Start", fill="#ff9800", font="Times 45 italic bold", tags="start")
+    canvas.create_image( 215, 405,image=button, anchor = "nw" ,tags="start")
+    canvas.create_text(407, 445, text = "Start", fill="white", font="Times 45 bold", tags="start")
     #Text Exit
-    canvas.create_rectangle(230, 500, 575, 570, fill="#eeeeee",outline="", tags="exit")
-    canvas.create_text(400, 533, text = "Exit", fill="#ff9800", font="Times 45 italic bold", tags="exit")
+    canvas.create_image( 215, 485,image=button, anchor = "nw" ,tags="exit")
+    canvas.create_text(405, 525, text = "Exit", fill="white", font="Times 45 bold", tags="exit")
     
 # Begining of game
 def begin():
-    canvas.create_text(380, 360, text = "Loading...", fill="black", font="Times 20 italic bold", tags="welcome")
+    canvas.create_image(0,0,image=mazegames,  anchor = 'nw')
     canvas.after(2000, start)
 begin()
-# back and Exit
 
+# back and Exit
 def Back(event):
     global grid, point, Win, Lost, PlayerLives
     start()
@@ -201,29 +258,29 @@ def Back(event):
     point = 0
     grid=[
         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [1,3,0,3,0,3,0,3,0,1,0,3,0,3,0,1,0,1,9,1],
-        [1,1,1,1,0,1,1,1,3,1,0,1,1,1,1,1,0,1,0,1],
-        [2,0,0,0,0,0,0,1,0,1,3,1,3,0,3,0,3,1,3,1],
-        [1,1,1,1,1,1,1,1,3,1,0,1,1,0,1,1,1,1,0,1],
-        [1,3,0,3,0,3,0,3,0,3,0,3,0,3,0,1,3,0,3,1],
-        [1,0,1,1,1,1,1,0,1,3,9,3,1,0,0,1,0,1,1,1],
-        [1,3,3,9,3,3,1,0,1,1,1,1,1,0,1,1,0,1,3,1],
-        [1,0,1,1,1,1,1,0,1,9,1,9,3,0,3,0,3,1,0,1],
-        [1,3,1,0,3,0,3,0,3,0,1,3,0,1,0,1,1,1,3,1],
-        [1,9,1,3,1,1,1,1,1,1,1,3,1,1,0,3,0,3,0,1],
-        [1,3,1,0,1,3,0,3,0,3,3,0,3,1,1,1,1,1,1,1],
-        [1,1,1,3,1,0,1,1,1,1,1,1,0,1,0,3,0,3,0,1],
-        [1,0,3,0,1,3,1,0,3,0,3,0,3,1,3,1,1,1,0,1],
-        [1,3,1,3,1,0,1,3,1,1,1,1,0,9,0,1,0,0,3,1],
-        [1,0,1,9,0,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1],
-        [1,3,1,3,1,3,1,3,1,0,3,0,3,0,3,0,3,0,3,5],
-        [1,0,1,0,1,0,9,0,1,0,3,0,9,1,1,1,1,1,1,1],
-        [1,3,1,3,1,3,1,3,1,1,1,1,0,3,0,3,0,3,0,1],
-        [1,0,3,0,3,0,1,0,3,0,9,3,0,1,3,3,9,3,3,1],
+        [1,3,3,3,3,3,3,3,3,1,3,3,3,3,3,1,3,1,9,1],
+        [1,1,1,1,3,1,1,1,3,1,3,1,1,1,1,1,3,1,3,1],
+        [2,0,0,0,0,0,9,1,0,1,3,1,3,0,3,0,3,1,3,1],
+        [1,1,1,1,1,1,1,1,3,1,3,1,1,0,1,1,1,1,3,1],
+        [1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,3,3,3,1],
+        [1,3,1,1,1,1,1,3,1,3,9,3,1,0,0,1,0,1,1,1],
+        [1,3,3,3,9,0,1,3,1,1,1,1,1,0,1,1,0,1,3,1],
+        [1,3,1,1,1,1,1,3,1,9,1,9,3,3,3,3,3,1,3,1],
+        [1,3,1,9,3,3,3,3,3,3,1,3,1,1,3,1,1,1,3,1],
+        [1,9,1,3,1,1,1,1,1,1,1,3,3,1,3,3,3,3,3,1],
+        [1,0,1,3,1,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1],
+        [1,1,1,3,1,3,1,1,1,1,1,1,3,1,3,3,3,3,3,1],
+        [1,3,3,3,1,3,1,3,3,3,3,3,3,1,3,1,1,1,3,1],
+        [1,3,1,3,1,3,1,3,1,1,1,1,9,3,3,1,3,3,3,1],
+        [1,3,1,3,9,3,1,3,1,1,1,1,1,1,1,1,1,1,3,1],
+        [1,3,1,3,1,3,1,3,1,3,3,3,3,3,3,3,3,3,3,1],
+        [1,3,1,3,1,3,3,9,3,1,6,3,3,1,1,1,1,1,1,1],
+        [1,3,1,3,1,3,1,3,1,1,1,1,3,3,3,9,3,3,9,1],
+        [1,3,3,3,3,3,1,3,3,3,3,9,3,1,3,3,3,3,3,1],
         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ]
 def Exit(event):
-   root.quit()
+    root.quit()
 
 root.bind('<w>',moveup)
 root.bind('<s>', movedown)
@@ -233,7 +290,9 @@ root.bind('<d>', moveright)
 canvas.tag_bind("start", "<Button-1>", game)
 canvas.tag_bind("exit", "<Button-1>", Exit)
 canvas.tag_bind("back", "<Button-1>", Back)
-canvas.tag_bind("next", "<Button-1>", Back)
+canvas.tag_bind("about", "<Button-1>", about)
+canvas.tag_bind("remove", "<Button-1>", remove)
+canvas.tag_bind("tryagain", "<Button-1>",Back)
 
 canvas.pack(expand=True, fill="both")
 fram.pack(expand=True, fill="both")
