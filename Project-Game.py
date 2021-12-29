@@ -130,12 +130,14 @@ def winningSound():
     winsound.PlaySound('Sounds\winning.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
 # next and back button
 def NextandBack():
+    clickSound()
     canvas.create_image( 18,-5, image =About, anchor = "nw" ,tags="back")
     canvas.create_text(65, 29, text = "BACK", fill="blue", font=("Roboto, 15 italic bold"), tags="back")
     canvas.create_image( 690, -5,  image =About, anchor = "nw" ,tags="about")
     canvas.create_text(738, 29, text = "ABOUT", fill="blue", font=("Roboto, 15 italic bold"), tags="about")
 
 def about(event):
+    clickSound()
     canvas.create_rectangle(140,70,650,600,fill="white",tags='bgsenario')
     canvas.create_rectangle(620,80,640,100,fill="red",tags='remove')
     canvas.create_text(630,90,text="X" ,fill="white",font=("Arial",15),tags='remove')
@@ -153,6 +155,7 @@ def about(event):
     canvas.create_text(257, 520, font="Purisa",text="(S) = movedown", tags="senario")
 
 def remove(event):
+    clickSound()
     canvas.delete('remove')
     canvas.delete('bgsenario')
     canvas.delete('senario')
@@ -161,13 +164,13 @@ def WinOrLost():
     global Win, Lost, grid, point
     if Win and point >=500:
         canvas.create_image( 0, 0, image = win, anchor = "nw")
-        canvas.create_image( 690, -5,  image =About, anchor = "nw" ,tags="about")
-        canvas.create_text(738, 29, text = "Replay", fill="blue", font=("Roboto, 15 italic bold"), tags="about")
+        canvas.create_image( 690, -5,  image =About, anchor = "nw" ,tags="back")
+        canvas.create_text(738, 29, text = "Replay", fill="blue", font=("Roboto, 15 italic bold"), tags="back")
 
     elif Win and point<500:
-        canvas.create_rectangle(200, 280, 600, 320, fill="#ffffff",outline="", tags="next")
+        canvas.create_rectangle(200, 280, 600, 320, fill="#ffffff",outline="")
         canvas.create_text(400,300, text = 'Not enough point, play again!', font=('Arial', 20))
-        canvas.create_image( 350, 310,  image =About, anchor = "nw" ,tags="about")
+        canvas.create_image( 350, 310,  image =About, anchor = "nw" ,tags="back")
         canvas.create_text(400, 345, text = "Retry", fill="blue", font=("Roboto, 15 italic bold"), tags="back")
 
     elif Lost:
@@ -239,6 +242,7 @@ def game(event):
     gameSound()
     
 def start():
+    gameSound()
     canvas.create_image(0,0,image=maze,  anchor = 'nw')
     #Text Start
     canvas.create_image( 215, 405,image=button, anchor = "nw" ,tags="start")
@@ -257,6 +261,7 @@ begin()
 def Back(event):
     global grid, point, Win, Lost, PlayerLives
     start()
+    clickSound()
     PlayerLives = 3
     Win = False
     Lost = False
@@ -297,7 +302,6 @@ canvas.tag_bind("exit", "<Button-1>", Exit)
 canvas.tag_bind("back", "<Button-1>", Back)
 canvas.tag_bind("about", "<Button-1>", about)
 canvas.tag_bind("remove", "<Button-1>", remove)
-canvas.tag_bind("tryagain", "<Button-1>",Back)
 
 canvas.pack(expand=True, fill="both")
 fram.pack(expand=True, fill="both")
